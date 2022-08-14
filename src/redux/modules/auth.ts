@@ -1,6 +1,6 @@
 import { push } from "connected-react-router";
 import { Action, createActions, handleActions } from "redux-actions";
-import { call, put, takeEvery } from "redux-saga/effects";
+import { call, put, select, takeEvery } from "redux-saga/effects";
 import TokenService from "../../services/TokenService";
 import UserService from "../../services/UserService";
 import { AuthState, LoginReqType } from "../../types";
@@ -59,7 +59,20 @@ function* loginSaga(action: Action<LoginReqType>) {
   }
 }
 
-function* logoutSaga() {}
+function* logoutSaga() {
+  try {
+    yield put(pending());
+    const token: string = yield select((state) => state.auth.token);
+    yield call(UserService.logout, token);
+    TokenService.set(token);
+    yield put(success(token));
+    yield put(push("/"));
+  } catch (error) {
+  } finally {
+    TokenService.remove();
+    yield put(success(null));
+  }
+}
 
 export function* authSaga() {
   yield takeEvery(`${prefix}/LOGIN`, loginSaga);
