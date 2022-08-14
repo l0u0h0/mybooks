@@ -1,6 +1,6 @@
 import React from "react";
 import { ErrorBoundary } from "react-error-boundary";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import Add from "./pages/Add";
 import Detail from "./pages/Detail";
 import Edit from "./pages/Edit";
@@ -8,20 +8,22 @@ import Home from "./pages/Home";
 import NotFound from "./pages/NotFound";
 import Signin from "./pages/Signin";
 import Error from "./pages/Error";
+import { ConnectedRouter } from "connected-react-router";
+import history from "./history";
 
 function App() {
   return (
     <ErrorBoundary FallbackComponent={Error}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/" element={<Home />} />
-          <Route path="/signin" element={<Signin />} />
-          <Route path="/add" element={<Add />} />
-          <Route path="/book/:id" element={<Detail />} />
-          <Route path="/edit/:id" element={<Edit />} />
-          <Route path="*" element={<NotFound />} />
-        </Routes>
-      </BrowserRouter>
+      <ConnectedRouter history={history}>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route exact path="/signin" component={Signin} />
+          <Route exact path="/add" component={Add} />
+          <Route exact path="/book/:id" component={Detail} />
+          <Route exact path="/edit/:id" component={Edit} />
+          <Route component={NotFound} />
+        </Switch>
+      </ConnectedRouter>
     </ErrorBoundary>
   );
 }

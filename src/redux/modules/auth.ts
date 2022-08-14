@@ -1,3 +1,4 @@
+import { push } from "connected-react-router";
 import { Action, createActions, handleActions } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import TokenService from "../../services/TokenService";
@@ -58,7 +59,7 @@ function* loginSaga(action: Action<LoginReqType>) {
     const token: string = yield call(UserService.login, action.payload);
     TokenService.set(token);
     yield put(success(token));
-    // push
+    yield put(push("/"));
   } catch (error: any) {
     yield put(fail(new Error(error?.response?.data?.error || "UNKNOWN_ERROR")));
   }
