@@ -3,13 +3,7 @@ import { Action, createActions, handleActions } from "redux-actions";
 import { call, put, takeEvery } from "redux-saga/effects";
 import TokenService from "../../services/TokenService";
 import UserService from "../../services/UserService";
-import { LoginReqType } from "../../types";
-
-interface AuthState {
-  token: string | null;
-  loading: boolean;
-  error: Error | null;
-}
+import { AuthState, LoginReqType } from "../../types";
 
 const initialState: AuthState = {
   token: null,
