@@ -1,12 +1,5 @@
 import { createActions, handleActions } from "redux-actions";
-
-interface Book {}
-
-interface BooksState {
-  books: Book[] | null;
-  loading: boolean;
-  error: Error | null;
-}
+import { BookType, BooksState } from "../../types";
 
 const initialState: BooksState = {
   books: null,
@@ -23,7 +16,7 @@ export const { pending, success, fail } = createActions(
   { prefix }
 );
 
-const reducer = handleActions<BooksState, Book[]>(
+const reducer = handleActions<BooksState, BookType[]>(
   {
     PENDING: (state) => ({
       ...state,

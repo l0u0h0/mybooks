@@ -2,10 +2,12 @@ import { connectRouter } from "connected-react-router";
 import { combineReducers } from "redux";
 import auth from "./auth";
 import { History } from "history";
+import books from "./books";
 
 const reducer = (history: History) =>
   combineReducers({
     auth,
+    books,
     router: connectRouter(history),
   });
 
