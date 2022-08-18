@@ -57,6 +57,7 @@ const List: React.FC<ListProps> = ({
           </Button>,
         ]}
       />
+      <img src="/bg_list.jpeg" style={{ width: "100%" }} alt="list_img" />
       <Table
         dataSource={books || []}
         columns={[
@@ -65,7 +66,7 @@ const List: React.FC<ListProps> = ({
             dataIndex: "book",
             key: "book",
             render: (text, record) => (
-              <Book {...record} deleteBook={deleteBook} />
+              <Book {...record} deleteBook={deleteBook} key={record.bookId} />
             ),
           },
         ]}
