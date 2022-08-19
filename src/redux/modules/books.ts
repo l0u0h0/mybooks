@@ -19,7 +19,7 @@ export const { pending, success, fail } = createActions(
   { prefix }
 );
 
-const reducer = handleActions<BooksState, any>(
+const reducer = handleActions<BooksState, BookType[]>(
   {
     PENDING: (state) => ({
       ...state,

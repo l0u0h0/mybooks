@@ -2,12 +2,12 @@ import React, { useEffect } from "react";
 import { PageHeader, Button } from "antd";
 import { BookOutlined } from "@ant-design/icons";
 import Layout from "./Layout";
-import { BookResType } from "../types";
+import { BookType } from "../types";
 import styles from "./Detail.module.css";
 import TextArea from "antd/lib/input/TextArea";
 
 interface DetailProps {
-  book: BookResType | null | undefined;
+  book: BookType | null | undefined;
   error: Error | null;
   edit: () => void;
   back: () => void;
