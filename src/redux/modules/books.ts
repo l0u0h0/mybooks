@@ -45,10 +45,11 @@ export default reducer;
 
 // saga
 
-export const { getBooks, addBook, deleteBook } = createActions(
+export const { getBooks, addBook, deleteBook, editBook } = createActions(
   "GET_BOOKS",
   "ADD_BOOK",
   "DELETE_BOOK",
+  "EDIT_BOOK",
   {
     prefix,
   }
@@ -91,7 +92,34 @@ function* deleteBookSaga(action: Action<number>) {
     const books: BookType[] = yield select((state) => state.books.books);
     yield put(success(books.filter((book) => book.bookId !== bookId)));
   } catch (error: any) {
-    yield put(fail(new Error(error?.response?.data.error || "UNKNWON_ERROR")));
+    yield put(fail(new Error(error?.response?.data?.error || "UNKNWON_ERROR")));
+  }
+}
+
+interface editBookType {
+  book: BookReqType;
+  bookId: number;
+}
+
+function* editBookSaga(action: Action<editBookType>) {
+  try {
+    yield put(pending());
+    const token: string = yield select((state) => state.auth.token);
+    const newBook: BookType = yield call(
+      BookService.editBook,
+      token,
+      action.payload.bookId,
+      action.payload.book
+    );
+    const books: BookType[] = yield select((state) => state.auth.token);
+    yield put(
+      success(
+        books.map((book) => (book.bookId === newBook.bookId ? newBook : book))
+      )
+    );
+    yield put(push("/"));
+  } catch (error: any) {
+    yield put(fail(new Error(error?.response?.data?.error || "UNKNOWN_ERROR")));
   }
 }
 
@@ -99,4 +127,5 @@ export function* booksSaga() {
   yield takeLatest(`${prefix}/GET_BOOKS`, getBooksSaga);
   yield takeEvery(`${prefix}/ADD_BOOK`, addBookSaga);
   yield takeEvery(`${prefix}/DELETE_BOOK`, deleteBookSaga);
+  yield takeEvery(`${prefix}/EDIT_BOOK`, editBookSaga);
 }

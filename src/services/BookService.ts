@@ -32,4 +32,17 @@ export default class BookService {
       },
     });
   }
+
+  public static async editBook(
+    token: string,
+    bookId: number,
+    book: BookReqType
+  ): Promise<BookType> {
+    const response = await axios.patch(`${BOOK_API_URL}/${bookId}`, book, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return response.data;
+  }
 }

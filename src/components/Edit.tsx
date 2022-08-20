@@ -1,30 +1,63 @@
-import { FormOutlined } from "@ant-design/icons";
+import React, { useRef, useEffect } from "react";
 import {
-  Button,
-  Input,
-  InputRef,
-  PageHeader,
   message as messageDialog,
+  PageHeader,
+  Input,
+  Button,
+  InputRef,
 } from "antd";
 import TextArea from "antd/lib/input/TextArea";
-import Layout from "./Layout";
-import styles from "./Add.module.css";
-import { useRef } from "react";
 import TextAreaType from "rc-textarea";
-import { BookReqType } from "../types";
+import { FormOutlined } from "@ant-design/icons";
+import Layout from "./Layout";
+import { BookType, BookReqType } from "../types";
+import styles from "./Edit.module.css";
 
-interface AddProps {
+interface EditProps {
+  book: BookType | undefined | null;
   loading: boolean;
+  error: Error | null;
+  edit: (book: BookReqType) => void;
   back: () => void;
+  getBooks: () => void;
   logout: () => void;
-  add: (book: BookReqType) => void;
 }
 
-const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
+const Edit: React.FC<EditProps> = ({
+  book,
+  loading,
+  error,
+  edit,
+  getBooks,
+  back,
+  logout,
+}) => {
   const titleRef = useRef<InputRef>(null);
   const messageRef = useRef<TextAreaType>(null);
   const authorRef = useRef<InputRef>(null);
   const urlRef = useRef<InputRef>(null);
+
+  useEffect(() => {
+    getBooks();
+  }, [getBooks]);
+
+  useEffect(() => {
+    if (error) {
+      logout();
+    }
+  }, [error, logout]);
+
+  if (book === null) {
+    return null;
+  }
+  if (book === undefined) {
+    return (
+      <div>
+        <h1>NotFound Book</h1>
+        <img src="/bg_list.jpeg" className={styles.bg} alt="NotFound Book" />
+      </div>
+    );
+  }
 
   return (
     <Layout>
@@ -32,11 +65,10 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
         onBack={back}
         title={
           <div>
-            <FormOutlined />
-            Add Book
+            <FormOutlined /> Edit Book
           </div>
         }
-        subTitle="Add Your Book"
+        subTitle="Edit Your Book"
         extra={[
           <Button
             key="1"
@@ -48,43 +80,53 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
           </Button>,
         ]}
       />
-      <div className={styles.add}>
+
+      <img src="/bg_list.png" className={styles.bg} alt="books" />
+
+      <div className={styles.edit}>
         <div className={styles.input_title}>
           Title
-          <span className={styles.required}>*</span>
+          <span className={styles.required}> *</span>
         </div>
         <div className={styles.input_area}>
-          <Input placeholder="Title" className={styles.input} ref={titleRef} />
+          <Input
+            placeholder="Title"
+            ref={titleRef}
+            defaultValue={book?.title || ""}
+            className={styles.input}
+          />
         </div>
         <div className={styles.input_comment}>
           Comment
-          <span className={styles.required}>*</span>
+          <span className={styles.required}> *</span>
         </div>
         <div className={styles.input_area}>
           <TextArea
             rows={4}
             placeholder="Comment"
-            className={styles.input}
             ref={messageRef}
+            defaultValue={book?.message || ""}
+            className={styles.input}
+            style={{ minHeight: 100 }}
           />
         </div>
-        <div className={styles.input_author}>
-          Author
-          <span className={styles.required}>*</span>
-        </div>
+        <div className={styles.input_author}>Author</div>
         <div className={styles.input_area}>
           <Input
             placeholder="Author"
-            className={styles.input}
             ref={authorRef}
+            defaultValue={book?.author || ""}
+            className={styles.input}
           />
         </div>
-        <div className={styles.input_url}>
-          URL
-          <span className={styles.required}>*</span>
-        </div>
+        <div className={styles.input_url}>URL</div>
         <div className={styles.input_area}>
-          <Input placeholder="URL" className={styles.input} ref={urlRef} />
+          <Input
+            placeholder="URL"
+            ref={urlRef}
+            defaultValue={book?.url || ""}
+            className={styles.input}
+          />
         </div>
         <div className={styles.button_area}>
           <Button
@@ -93,12 +135,13 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
             onClick={click}
             className={styles.button}
           >
-            Add
+            Update
           </Button>
         </div>
       </div>
     </Layout>
   );
+
   function click() {
     const title = titleRef.current!.input!.value;
     const message = messageRef.current!.resizableTextArea.props.value as string;
@@ -114,7 +157,7 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
       messageDialog.error("Plz fill out All Inputs");
       return;
     }
-    add({
+    edit({
       title,
       message,
       author,
@@ -123,4 +166,4 @@ const Add: React.FC<AddProps> = ({ loading, back, logout, add }) => {
   }
 };
 
-export default Add;
+export default Edit;
