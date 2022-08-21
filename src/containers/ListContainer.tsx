@@ -36,6 +36,12 @@ export default function ListContainer() {
     },
     [dispatch]
   );
+  const goEdit = useCallback(
+    (bookId: number) => {
+      dispatch(push(`/edit/${bookId}`));
+    },
+    [dispatch]
+  );
   return (
     <List
       books={books}
@@ -45,6 +51,7 @@ export default function ListContainer() {
       logout={logout}
       goAdd={goAdd}
       deleteBook={deleteBook}
+      goEdit={goEdit}
     />
   );
 }
