@@ -81,7 +81,7 @@ const Edit: React.FC<EditProps> = ({
         ]}
       />
 
-      <img src="/bg_list.png" className={styles.bg} alt="books" />
+      <img src="/bg_list.jpeg" className={styles.bg} alt="books" />
 
       <div className={styles.edit}>
         <div className={styles.input_title}>

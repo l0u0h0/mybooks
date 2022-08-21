@@ -111,7 +111,7 @@ function* editBookSaga(action: Action<editBookType>) {
       action.payload.bookId,
       action.payload.book
     );
-    const books: BookType[] = yield select((state) => state.auth.token);
+    const books: BookType[] = yield select((state) => state.books.books);
     yield put(
       success(
         books.map((book) => (book.bookId === newBook.bookId ? newBook : book))
