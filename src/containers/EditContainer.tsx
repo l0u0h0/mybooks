@@ -34,7 +34,7 @@ const EditContainer = () => {
 
   const edit = useCallback(
     (book: BookReqType) => {
-      dispatch(editBookSagaStart(bookId, book));
+      dispatch(editBookSagaStart(book, bookId));
     },
     [dispatch, bookId]
   );

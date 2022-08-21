@@ -1,4 +1,5 @@
 import { push } from "connected-react-router";
+import { AnyAction } from "redux";
 import { Action, createActions, handleActions } from "redux-actions";
 import { call, put, select, takeEvery, takeLatest } from "redux-saga/effects";
 import BookService from "../../services/BookService";
@@ -70,6 +71,7 @@ function* addBookSaga(action: Action<BookReqType>) {
   try {
     yield put(pending());
     const token: string = yield select((state) => state.auth.token);
+    console.log(action.payload);
     const book: BookType = yield call(
       BookService.addBook,
       token,
@@ -96,22 +98,27 @@ function* deleteBookSaga(action: Action<number>) {
   }
 }
 
-interface editBookType {
+interface editBookType extends AnyAction {
   book: BookReqType;
   bookId: number;
 }
 
 function* editBookSaga(action: Action<editBookType>) {
   try {
+    console.log("editbooksaga");
     yield put(pending());
+    console.log("pending");
     const token: string = yield select((state) => state.auth.token);
+    console.log("gettoken", token);
+    console.log(action);
     const newBook: BookType = yield call(
       BookService.editBook,
       token,
-      action.payload.bookId,
-      action.payload.book
+      action.payload
     );
+    console.log(newBook);
     const books: BookType[] = yield select((state) => state.books.books);
+    console.log(books);
     yield put(
       success(
         books.map((book) => (book.bookId === newBook.bookId ? newBook : book))
