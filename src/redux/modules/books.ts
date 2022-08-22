@@ -1,4 +1,5 @@
 import { push } from "connected-react-router";
+import { AnyAction } from "redux";
 import { Action, createActions, handleActions } from "redux-actions";
 import { call, put, select, takeEvery, takeLatest } from "redux-saga/effects";
 import BookService from "../../services/BookService";
@@ -21,7 +22,7 @@ export const { pending, success, fail } = createActions(
 
 const reducer = handleActions<BooksState, BookType[]>(
   {
-    PENDING: (state) => ({
+    PENDING: (state, action) => ({
       ...state,
       loading: true,
       error: null,
@@ -46,10 +47,17 @@ export default reducer;
 // saga
 
 export const { getBooks, addBook, deleteBook, editBook } = createActions(
+  {
+    ADD_BOOK: (book: BookReqType) => ({
+      book,
+    }),
+    EDIT_BOOK: (bookId: number, book: BookReqType) => ({
+      bookId,
+      book,
+    }),
+    DELETE_BOOK: (bookId: string) => ({ bookId }),
+  },
   "GET_BOOKS",
-  "ADD_BOOK",
-  "DELETE_BOOK",
-  "EDIT_BOOK",
   {
     prefix,
   }
@@ -70,7 +78,6 @@ function* addBookSaga(action: Action<BookReqType>) {
   try {
     yield put(pending());
     const token: string = yield select((state) => state.auth.token);
-    console.log(action.payload);
     const book: BookType = yield call(
       BookService.addBook,
       token,
@@ -97,28 +104,22 @@ function* deleteBookSaga(action: Action<number>) {
   }
 }
 
-interface editBookType {
-  book: BookReqType;
+interface EditBookSagaAction extends AnyAction {
   bookId: number;
+  book: BookReqType;
 }
 
-function* editBookSaga(action: Action<editBookType>) {
+function* editBookSaga(action: EditBookSagaAction) {
   try {
-    console.log("editbooksaga");
     yield put(pending());
-    console.log("pending");
     const token: string = yield select((state) => state.auth.token);
-    console.log("gettoken", token);
-    console.log(action.payload.bookId);
     const newBook: BookType = yield call(
       BookService.editBook,
       token,
       action.payload.bookId,
       action.payload.book
     );
-    console.log(newBook);
     const books: BookType[] = yield select((state) => state.books.books);
-    console.log(books);
     yield put(
       success(
         books.map((book) => (book.bookId === newBook.bookId ? newBook : book))

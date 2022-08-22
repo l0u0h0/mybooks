@@ -17,7 +17,7 @@ interface EditProps {
   book: BookType | undefined | null;
   loading: boolean;
   error: Error | null;
-  edit: (book: BookReqType, bookId: number | undefined) => void;
+  edit: (book: BookReqType) => void;
   back: () => void;
   getBooks: () => void;
   logout: () => void;
@@ -147,7 +147,6 @@ const Edit: React.FC<EditProps> = ({
     const message = messageRef.current!.resizableTextArea.props.value as string;
     const author = authorRef.current!.input!.value;
     const url = urlRef.current!.input!.value;
-
     if (
       title === undefined ||
       message === undefined ||
@@ -157,15 +156,12 @@ const Edit: React.FC<EditProps> = ({
       messageDialog.error("Plz fill out All Inputs");
       return;
     }
-    edit(
-      {
-        title,
-        message,
-        author,
-        url,
-      },
-      book?.bookId
-    );
+    edit({
+      title,
+      message,
+      author,
+      url,
+    });
   }
 };
 

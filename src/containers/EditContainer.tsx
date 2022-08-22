@@ -33,10 +33,10 @@ const EditContainer = () => {
   }, [dispatch]);
 
   const edit = useCallback(
-    (book: BookReqType, bookId: number | undefined) => {
-      dispatch(editBookSagaStart(book, bookId));
+    (book: BookReqType) => {
+      dispatch(editBookSagaStart(bookId, book));
     },
-    [dispatch]
+    [dispatch, bookId]
   );
 
   const back = useCallback(() => {
