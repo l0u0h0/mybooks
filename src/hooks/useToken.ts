@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { RootState } from "../types";
+import { RootState } from "../common/types";
 
 export default function useToken() {
   const token = useSelector<RootState, string | null>(

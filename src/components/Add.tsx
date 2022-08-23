@@ -11,7 +11,7 @@ import Layout from "./Layout";
 import styles from "./Add.module.css";
 import { useRef } from "react";
 import TextAreaType from "rc-textarea";
-import { BookReqType } from "../types";
+import { BookReqType } from "../common/types";
 
 interface AddProps {
   loading: boolean;

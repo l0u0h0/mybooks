@@ -3,7 +3,7 @@ import { AnyAction } from "redux";
 import { Action, createActions, handleActions } from "redux-actions";
 import { call, put, select, takeEvery, takeLatest } from "redux-saga/effects";
 import BookService from "../../services/BookService";
-import { BookType, BooksState, BookReqType } from "../../types";
+import { BookType, BooksState, BookReqType } from "../../common/types";
 
 const initialState: BooksState = {
   books: null,
@@ -48,15 +48,13 @@ export default reducer;
 
 export const { getBooks, addBook, deleteBook, editBook } = createActions(
   {
-    ADD_BOOK: (book: BookReqType) => ({
-      book,
-    }),
     EDIT_BOOK: (bookId: number, book: BookReqType) => ({
       bookId,
       book,
     }),
-    DELETE_BOOK: (bookId: string) => ({ bookId }),
   },
+  "ADD_BOOK",
+  "DELETE_BOOK",
   "GET_BOOKS",
   {
     prefix,

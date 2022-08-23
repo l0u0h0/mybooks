@@ -10,7 +10,7 @@ import TextArea from "antd/lib/input/TextArea";
 import TextAreaType from "rc-textarea";
 import { FormOutlined } from "@ant-design/icons";
 import Layout from "./Layout";
-import { BookType, BookReqType } from "../types";
+import { BookType, BookReqType } from "../common/types";
 import styles from "./Edit.module.css";
 
 interface EditProps {

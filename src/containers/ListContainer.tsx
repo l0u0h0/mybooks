@@ -2,7 +2,7 @@ import { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import List from "../components/List";
-import { BookType, RootState } from "../types";
+import { BookType, RootState } from "../common/types";
 import {
   getBooks as getBooksSagaStart,
   deleteBook as deleteBookSagaStart,

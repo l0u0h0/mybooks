@@ -1,7 +1,7 @@
 import { Button, Col, Input, InputRef, Row } from "antd";
 import { useRef } from "react";
 import styles from "./Signin.module.css";
-import { LoginReqType } from "../types";
+import { LoginReqType } from "../common/types";
 
 interface SigninProps {
   login: (reqData: LoginReqType) => void;

@@ -5,7 +5,7 @@ import {
   HomeOutlined,
 } from "@ant-design/icons";
 import { Link } from "react-router-dom";
-import { BookType } from "../types";
+import { BookType } from "../common/types";
 import moment from "moment";
 import { Button, Tooltip } from "antd";
 import styles from "./Book.module.css";

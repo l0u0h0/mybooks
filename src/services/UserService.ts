@@ -1,5 +1,5 @@
 import axios from "axios";
-import { LoginReqType } from "../types";
+import { LoginReqType } from "../common/types";
 
 const USER_API_URL = "https://api.marktube.tv/v1/me";
 

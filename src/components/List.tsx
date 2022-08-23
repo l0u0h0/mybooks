@@ -1,6 +1,6 @@
 import { Button, PageHeader, Table } from "antd";
 import { useEffect } from "react";
-import { BookType } from "../types";
+import { BookType } from "../common/types";
 import Layout from "./Layout";
 import Book from "./Book";
 import styles from "./List.module.css";

@@ -9,7 +9,7 @@ import NotFound from "./pages/NotFound";
 import Signin from "./pages/Signin";
 import Error from "./pages/Error";
 import { ConnectedRouter } from "connected-react-router";
-import history from "./history";
+import history from "./common/history";
 
 function App() {
   return (

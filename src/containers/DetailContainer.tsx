@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { goBack } from "connected-react-router";
 import { useParams } from "react-router-dom";
 import Detail from "../components/Detail";
-import { RootState, BookType } from "../types";
+import { RootState, BookType } from "../common/types";
 import { logout as logoutSagaStart } from "../redux/modules/auth";
 import { getBooks as getBooksSagaStart } from "../redux/modules/books";
 

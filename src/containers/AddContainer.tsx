@@ -2,7 +2,7 @@ import { goBack } from "connected-react-router";
 import { useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Add from "../components/Add";
-import { BookReqType, RootState } from "../types";
+import { BookReqType, RootState } from "../common/types";
 import { logout as logoutSagaStart } from "../redux/modules/auth";
 import { addBook as addBookSagaStart } from "../redux/modules/books";
 

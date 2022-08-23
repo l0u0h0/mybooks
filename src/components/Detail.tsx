@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { PageHeader, Button } from "antd";
 import { BookOutlined } from "@ant-design/icons";
 import Layout from "./Layout";
-import { BookType } from "../types";
+import { BookType } from "../common/types";
 import styles from "./Detail.module.css";
 import TextArea from "antd/lib/input/TextArea";
 

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { BookReqType, BookType } from "../types";
+import { BookReqType, BookType } from "../common/types";
 
 const BOOK_API_URL = "https://api.marktube.tv/v1/book";
 
